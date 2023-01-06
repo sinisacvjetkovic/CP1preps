@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define NUM_FLOORS 5
+#define BASEMENT_FLOORS 3
+
+// Initializes the variables needed for the elevator simulation
+void initElevator(int *currentFloor, int *destinationFloor, bool *movingUp) {
+*currentFloor = 0; // Start at ground floor
+*destinationFloor = 0;
+*movingUp = true; // Start by going up
+}
+
+// Handles user input for the destination floor
+void inputFloor(int *destinationFloor) {
+printf("Enter your destination floor (0-5): ");
+scanf("%d", destinationFloor);
+
+// Validate input
+if (*destinationFloor < 0 || *destinationFloor > NUM_FLOORS) {
+printf("Invalid floor number. Please try again.\n");
+inputFloor(destinationFloor);
+}
+}
+
+// Moves the elevator from the current floor to the destination floor
+void moveElevator(int *currentFloor, int destinationFloor, bool movingUp) {
+printf("Elevator moving from floor %d to floor %d...\n", *currentFloor, destinationFloor);
+
+while (*currentFloor != destinationFloor) {
+if (movingUp) {
+(*currentFloor)++;
+} else {
+(*currentFloor)--;
+}
+}
+}
+
+// Simulates the doors of the elevator opening and closing
+void openCloseDoors() {
+printf("Doors opening...\n");
+printf("Doors closing...\n");
+}
+
+int main() {
+int currentFloor;
+int destinationFloor;
+bool movingUp;
+
+initElevator(&currentFloor, &destinationFloor, &movingUp);
+
+while (true) {
+inputFloor(&destinationFloor);
+
+
+// Determine direction to move
+if (destinationFloor > currentFloor) {
+  movingUp = true;
+} else {
+  movingUp = false;
+}
+
+moveElevator(&currentFloor, destinationFloor, movingUp);
+openCloseDoors();
+}
+
+return 0;
+}
